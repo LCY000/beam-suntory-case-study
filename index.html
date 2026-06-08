@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beam Suntory 個案研究報告｜投資銀行與併購</title>
+<style>
+  /* ============== 列印 / PDF 版面設定 ============== */
+  @page {
+    size: A4;
+    margin: 20mm 18mm 18mm 18mm;
+  }
+  :root{
+    --ink:#1c2430;        /* 正文 */
+    --head:#16314f;       /* 標題深藍 */
+    --accent:#1f5c8c;     /* 點綴藍 */
+    --rule:#c9d2dc;       /* 細線 */
+    --soft:#eef3f8;       /* 淡底 */
+    --soft2:#f6f8fb;
+    --muted:#5a6675;      /* 次要文字 */
+    --hi:#fff7e6;         /* 重點底 */
+    --hi-line:#e0a93f;
+    --th:#16314f;
+    --stripe:#f4f7fa;
+    --good:#1d7a4d; --mid:#b3781b; --high:#b23b3b;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:"Noto Serif TC","Songti TC","STSong","Times New Roman",serif;
+    color:var(--ink);
+    line-height:1.75;
+    font-size:12.0pt;
+    background:#fff;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .page{
+    max-width:820px; margin:0 auto; padding:30px 40px 60px;
+  }
+  /* ============== 工具列（列印時隱藏） ============== */
+  .toolbar{
+    position:sticky; top:0; z-index:50;
+    background:var(--head); color:#fff;
+    display:flex; align-items:center; gap:14px;
+    padding:9px 18px; font-family:"Helvetica Neue",Arial,"PingFang TC",sans-serif;
+    font-size:12.5px; box-shadow:0 2px 6px rgba(0,0,0,.18);
+  }
+  .toolbar b{ font-weight:600; letter-spacing:.3px; margin-right:auto; }
+  .toolbar button{
+    background:#fff; color:var(--head); border:none; border-radius:4px;
+    padding:6px 14px; font-size:12.5px; font-weight:600; cursor:pointer;
+    font-family:inherit;
+  }
+  .toolbar button:hover{ background:#ffe9bf; }
+  .toolbar span{ opacity:.85; font-size:11.5px; }
+
+  /* ============== 標題層級 ============== */
+  h1,h2,h3,h4{ font-family:"Helvetica Neue",Arial,"PingFang TC","Heiti TC",sans-serif; }
+  .q-block h1,.q-block h2{ break-after:avoid; }
+  h2.section{
+    font-size:16.6pt; color:var(--head); margin:0 0 4px;
+    padding-bottom:7px; border-bottom:2.5px solid var(--head);
+    letter-spacing:.3px;
+  }
+  h2.section .qno{
+    display:inline-block; background:var(--head); color:#fff;
+    font-size:11.8pt; padding:1px 10px; border-radius:3px; margin-right:10px;
+    vertical-align:2px;
+  }
+  h3.sub{ font-size:13.4pt; color:var(--accent); margin:20px 0 6px; }
+  h4.mini{ font-size:12.2pt; color:var(--head); margin:14px 0 3px; }
+  p{ margin:0 0 11px; text-align:justify; }
+  .q-block p{ text-indent:2em; }
+  .q-block p.frame-note, .q-block p.tnote{ text-indent:0; }
+  ul,ol{ margin:4px 0 12px; padding-left:22px; }
+  li{ margin-bottom:5px; text-align:justify; }
+  strong{ color:#11253b; }
+  .en{ font-family:"Helvetica Neue",Arial,sans-serif; font-style:italic; color:var(--accent); }
+  .term{ font-family:"Helvetica Neue",Arial,sans-serif; font-weight:600; color:var(--head); font-style:normal; }
+
+  /* ============== 封面 ============== */
+  .cover{ text-align:center; padding:24px 30px; }
+  .cover-inner{ max-width:640px; margin:0 auto; }
+  .cover .course{ font-family:"Helvetica Neue",Arial,sans-serif; letter-spacing:3px;
+    font-size:11.8pt; color:var(--muted); text-transform:uppercase; }
+  .cover .rule-sm{ width:60px; height:3px; background:var(--hi-line); margin:22px auto 38px; }
+  .cover h1{ font-size:24.6pt; color:var(--head); line-height:1.36; margin:0 0 18px; }
+  .cover .sub{ font-size:13.9pt; color:var(--accent); margin-bottom:54px; font-family:"Helvetica Neue",Arial,sans-serif; }
+  .cover .meta{ font-family:"Helvetica Neue",Arial,sans-serif; font-size:11.8pt; color:var(--ink);
+    display:block; max-width:500px; margin:0 auto; text-align:left;
+    border-top:1px solid var(--rule); padding-top:28px; }
+  .cover .meta div{ display:flex; gap:14px; margin:9px 0; line-height:1.6; }
+  .cover .meta b{ flex:0 0 64px; color:var(--muted); font-weight:600; }
+  .cover .members{ margin:36px auto 0; max-width:500px; padding-top:30px;
+    border-top:1px solid var(--rule);
+    display:grid; grid-template-columns:auto auto; justify-content:center; gap:11px 56px; text-align:left;
+    font-family:"Helvetica Neue",Arial,"PingFang TC",sans-serif; font-size:11.4pt; }
+  .cover .members .lbl{ grid-column:1 / -1; text-align:center; color:var(--muted);
+    letter-spacing:2px; font-size:10.7pt; margin-bottom:2px; }
+  .cover .members span.m{ color:var(--ink); }
+  .cover .members span.m i{ color:var(--muted); font-style:normal; margin-right:8px;
+    font-variant-numeric:tabular-nums; }
+
+  /* ============== 提要框 / 重點框 ============== */
+  .abstract{
+    background:var(--soft); border-left:4px solid var(--accent);
+    padding:14px 18px; margin:20px 0 4px; border-radius:0 5px 5px 0;
+    font-size:11.4pt; line-height:1.7;
+  }
+  .abstract b{ color:var(--head); }
+  .callout{
+    background:var(--hi); border:1px solid var(--hi-line);
+    border-radius:5px; padding:11px 15px; margin:14px 0; font-size:11.5pt;
+  }
+  .callout b{ color:#7a5410; }
+  blockquote{
+    margin:14px 0; padding:10px 18px; background:var(--soft2);
+    border-left:4px solid var(--rule); color:var(--muted); font-style:italic;
+    font-size:11.4pt; border-radius:0 4px 4px 0;
+  }
+  .verdict{
+    background:#13314f; color:#fff; border-radius:6px; padding:12px 16px;
+    margin:16px 0 4px; font-size:11.7pt; line-height:1.7;
+  }
+  .verdict b{ color:#ffd98a; }
+  /* 深色框內的強調字一律改為亮色，確保對比 */
+  .verdict strong{ color:#fff; }
+  .verdict .term{ color:#bcd4e8; }
+  .verdict .en{ color:#bcd4e8; }
+  .ff-center strong{ color:#fff; }
+
+  /* ============== 表格 ============== */
+  .tbl-wrap{ margin:14px 0; break-inside:avoid; }
+  table{ width:100%; border-collapse:collapse; font-size:10.5pt;
+    font-family:"Helvetica Neue",Arial,"PingFang TC",sans-serif; }
+  caption{ caption-side:top; text-align:left; font-weight:600; color:var(--head);
+    font-size:11.1pt; margin-bottom:6px; font-family:"Helvetica Neue",Arial,sans-serif; }
+  th{ background:var(--th); color:#fff; padding:6px 9px; text-align:left; font-weight:600; font-size:10.3pt; }
+  td{ padding:5px 9px; border-bottom:1px solid #e2e8ef; vertical-align:top; }
+  tbody tr:nth-child(even) td{ background:var(--stripe); }
+  td.num,th.num{ text-align:right; font-variant-numeric:tabular-nums; }
+  .tnote{ font-size:9.4pt; color:var(--muted); margin-top:5px; line-height:1.5;
+    font-family:"Helvetica Neue",Arial,sans-serif; }
+  .pill{ display:inline-block; padding:1px 8px; border-radius:10px; font-size:9.4pt; font-weight:700; color:#fff; }
+  .p-high{ background:var(--high); } .p-mid{ background:var(--mid); } .p-low{ background:var(--good); }
+
+  /* ============== 五力圖 ============== */
+  .five-forces{ display:grid; grid-template-columns:1fr 1.3fr 1fr; gap:12px;
+    margin:18px 0; break-inside:avoid; align-items:stretch; }
+  .ff-box{ border:1.5px solid var(--accent); border-radius:8px; padding:12px 15px;
+    background:var(--soft2); font-family:"Helvetica Neue",Arial,"PingFang TC",sans-serif; font-size:10.8pt; line-height:1.65; }
+  .ff-head{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:6px; }
+  .ff-box h5{ margin:0; font-size:11.8pt; color:var(--head); }
+  .ff-box .en{ font-size:9.8pt; }
+  .ff-box h5 .en{ display:block; margin-top:2px; }
+  .ff-box p{ margin:0; text-align:justify; text-indent:0; }
+  .ff-head .pill{ flex:0 0 auto; align-self:flex-start; }
+  .ff-center{ background:var(--head); color:#fff; }
+  .ff-center h5{ color:#ffd98a; }
+  .ff-center .en{ color:#bcd4e8; }
+  .ff-center p, .ff-center strong{ color:#fff; }
+  .ff-upd{ margin-top:8px; padding-top:6px; border-top:1px dashed var(--rule); font-size:9.8pt; color:var(--muted); }
+  .ff-upd b{ color:var(--accent); font-weight:700; }
+  .ff-center .ff-upd{ border-top-color:rgba(255,255,255,.3); color:#cdd9e6; }
+  .ff-center .ff-upd b{ color:#ffd98a; }
+  .ff-top,.ff-bottom{ grid-column:1 / -1; max-width:74%; margin:0 auto; }
+
+  /* ============== 參考 / 註腳 ============== */
+  sup.fn{ font-size:8.0pt; color:var(--accent); font-family:Arial,sans-serif; font-weight:700; }
+  .refs{ font-size:9.6pt; font-family:"Helvetica Neue",Arial,sans-serif; color:var(--muted); line-height:1.6; }
+  .refs li{ margin-bottom:4px; }
+  .frame-note{ font-size:9.9pt; color:var(--muted); font-style:italic; margin:2px 0 12px; }
+
+  hr.thin{ border:none; border-top:1px solid var(--rule); margin:26px 0; }
+
+  /* ============== 分頁控制 ============== */
+  .page-break{ break-before:page; }
+  .q-block{ break-inside:auto; }
+  h2.section{ break-after:avoid; }
+  .tbl-wrap,.five-forces,.callout,.verdict,blockquote{ break-inside:avoid; }
+  figure{ break-inside:avoid; margin:14px 0; }
+
+  /* 網頁檢視時的版面（與列印獨立，互不影響） */
+  @media screen{
+    .page-break{ margin-top:56px; padding-top:22px; border-top:2px solid var(--soft); }
+    /* 網頁版封面做成精緻的標題卡，並與下方個案介紹拉開距離 */
+    .cover{ background:linear-gradient(180deg,#fbfcfe 0%, var(--soft2) 100%);
+      border:1px solid var(--rule); border-radius:14px;
+      padding:84px 48px 72px; margin-bottom:64px;
+      box-shadow:0 4px 20px rgba(22,49,79,.07); }
+    /* 內文區塊在網頁上加柔和陰影，線上閱讀更有層次 */
+    .callout, .verdict, .abstract, .ff-box, table{ box-shadow:0 2px 12px rgba(22,49,79,.06); }
+    .tbl-wrap{ margin:18px 0; }
+  }
+
+  @media print{
+    .toolbar{ display:none; }
+    .page{ padding:0; max-width:100%; }
+    .cover{ break-after:page; min-height:250mm; display:flex; flex-direction:column;
+      justify-content:center; align-items:center; padding:0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <b>Beam Suntory 個案研究報告</b>
+  <span>A4 直式 · 已針對 PDF 列印排版</span>
+  <button onclick="window.print()">🖨 列印 / 另存 PDF</button>
+</div>
+
+<div class="page">
+
+<!-- ============================ 封面 ============================ -->
+<div class="cover">
+  <div class="cover-inner">
+  <div class="course">投資銀行與併購 ｜ Investment Banking &amp; M&amp;A</div>
+  <div class="rule-sm"></div>
+  <h1>三得利收購 Beam 個案研究<br>BEAM SUNTORY: Striving for Optimal Post-Acquisition Integration</h1>
+  <div class="sub">A US$16 Billion Cross-Border Acquisition &amp; Post-Merger Integration</div>
+  <div class="meta">
+    <div><b>個案來源</b>Ivey Publishing, Case No. 9B17M164 (W17681)</div>
+    <div><b>分析架構</b>進入模式 · 估值與槓桿 · PMI 整合 · Porter 五力</div>
+    <div><b>資料更新</b>個案內容止於 2017 年初，本報告數據更新至 2026 年 6 月</div>
+  </div>
+  <div class="members" style="display:block; text-align:center;">
+    <span class="lbl" style="display:block;">第&nbsp;一&nbsp;組</span>
+    <div style="margin-top:10px; color:#5a6675; font-size:10pt; line-height:1.7; max-width:470px; margin-left:auto; margin-right:auto;">🔒&nbsp;個資保護｜本線上公開分享版已隱去全體組員的姓名與學號，完整版本（含組員資訊）請以實際繳交之檔案為準。</div>
+  </div>
+  </div>
+</div>
+
+<!-- ============================ 一頁個案介紹 ============================ -->
+<section class="q-block">
+  <h2 class="section">個案介紹（Case Introduction）</h2>
+
+  <div class="abstract">
+    <b>摘要：</b>2014 年，面對人口老化、內需萎縮的日本酒業龍頭<strong>三得利（Suntory Holdings）</strong>，以
+    <strong>160 億美元</strong>全現金收購美國烈酒集團 <strong>Beam Inc.</strong>，一舉躍升為<strong>全球第三大烈酒公司</strong>。
+    然而高昂的溢價、龐大的債務，加上日美之間的企業文化衝突，使「收購後整合（<span class="term">Post-Merger Integration, PMI</span>）」
+    成為這樁交易真正的考驗。
+  </div>
+
+  <h3 class="sub">公司與產業背景</h3>
+  <p>三得利創立於 1899 年，秉持「<span class="term">やってみなはれ</span>（Yatte Minahare，意為放膽去做）」的精神，
+  從葡萄酒與日本威士忌（山崎、白州、響）起家，逐步跨足啤酒、軟性飲料與健康食品。然而到 2013 年，威士忌僅佔總營收
+  約 28%，真正撐起業績的是軟性飲料與水（約 55%），旗艦的日本威士忌在國內年輕世代間銷售長期疲軟。更根本的隱憂，
+  在於日本人口與內需持續萎縮，三得利唯有向海外擴張才能維持成長。為此，公司選擇以合資與收購切入國際市場
+  （2009 年收購 Orangina Schweppes 與 Frucor、2013 年收購 GSK 飲料部門），但在全球高端烈酒市場仍僅排第十。</p>
+
+  <p>另一方面，<strong>美國</strong>是全球規模最大、獲利最豐厚的烈酒市場。2014 年銷量逾 2.1 億箱、零售額約 700 億美元，
+  蒸餾烈酒連年侵蝕啤酒的市佔，並帶動「<span class="term">高端化（premiumization）</span>」與風味創新的風潮，加上酒稅遠低於日本，
+  對外來者而言正是極具吸引力的進場時機。</p>
+
+  <h3 class="sub">交易與衝突</h3>
+  <p>Beam 旗下擁有 Jim Beam、Maker's Mark、Knob Creek、Sauza、Hornitos、Courvoisier 等逾 40 個橫跨各價位、各品類的
+  品牌，以及完整的全球配銷網絡。它的威士忌與日本威士忌風味差異明顯，<strong>幾乎不會出現自家品牌互搶市場（cannibalization）的情形</strong>，
+  和三得利高度互補。2014 年 1 月，三得利宣布以<strong>每股 83.50 美元</strong>現金（較市價 66.97 美元溢價 <strong>25%</strong>、約 <strong>20 倍
+  EBITDA</strong>）收購 Beam，並於 4 月 30 日完成交割，成立 Beam Suntory Inc.，合計年銷售額約 46 億美元，<strong>規模僅次於
+  Diageo 與 Pernod Ricard</strong>。</p>
+
+  <p>只是這場聯姻的蜜月期並不長，收購讓三得利的淨負債從 2013 年的約 1,260 億日圓一口氣暴增到 2014 年的約 1.63 兆日圓
+  （約 159 億美元），淨負債／EBITDA 升至約 5.5 倍，連信用評等展望也被調為負向。整合一展開，各種問題便接連浮現，最先是
+  指揮鏈混亂，身為子公司的 Beam 反而管轄起日本的烈酒業務，接著又因製程而爆發文化衝突，新浪剛史以「改善（kaizen）」為由
+  建議調整 Jim Beam，觸怒了堅守兩百年工藝的員工，而最棘手的莫過於互信瓦解，持股 89% 的創辦家族否決了當初承諾的美國子公司
+  IPO，使還債與整合計畫雙雙落空，Beam 高層也因此大量出走，再加上三得利本身正陷入<strong>陳年威士忌供應短缺</strong>
+  （要補足需求恐怕得花上十年），「最佳整合深度」於是成了懸而未決的難題。</p>
+
+  <div class="callout">
+    <b>核心問題（Central Question）：</b>在產業整併、美國市場吸引力與三得利資源限制的背景下，收購 Beam 是否為進入全球
+    烈酒市場的正確路徑？160 億美元的高價與龐大舉債是否值得？日美雙方又該如何化解文化差異、選擇<strong>最佳整合深度</strong>
+    以實現綜效，並補上日本威士忌的供給缺口？
+  </div>
+</section>
+
+<!-- ============================ Q1 ============================ -->
+<section class="q-block page-break">
+  <h2 class="section"><span class="qno">Q1</span>收購 Beam 是否為進入全球烈酒市場的正確路徑？</h2>
+  <p class="frame-note">分析架構：產業環境分析 · 資源與能力（VRIO）· 進入模式抉擇（Build / Buy / Ally）· 進入時機</p>
+
+  <h3 class="sub">一、產業環境：一場「不併購別人，就被別人併購」的競賽</h3>
+  <p>2014 年的全球烈酒業具備三項結構特徵，全都指向同一個結論：企業必須盡快取得規模與通路。</p>
+  <ul>
+    <li><strong>整併加速（consolidation）：</strong>Diageo、Pernod Ricard 等龍頭以併購擴張，推高了競爭強度與進入門檻，
+    後進者若無相當規模，便難以取得通路與議價能力。</li>
+    <li><strong>成熟市場飽和，美國成為例外：</strong>多數已開發市場停滯，唯獨美國仍量價齊揚，且偏好高端威士忌，
+    而這正是三得利日本威士忌的強項所在。</li>
+    <li><strong>消費的「民族情感」壁壘：</strong>烈酒選擇帶有國族認同，純靠出口難以跨越。若要落地深耕，最快的方式
+    就是直接擁有一個美國品牌與一支當地團隊。</li>
+  </ul>
+
+  <h3 class="sub">二、三得利的資源與能力：強在品牌與資金，弱在全球通路</h3>
+  <div class="tbl-wrap">
+    <table>
+      <caption>表 1-1　三得利資源盤點（以 VRIO 視角）</caption>
+      <thead><tr><th style="width:26%">資源／能力</th><th>狀態與缺口</th><th style="width:20%">對全球化的意涵</th></tr></thead>
+      <tbody>
+        <tr><td>釀造工藝與高端品牌（山崎／響）</td><td>有價值、稀少、難模仿（2015 年山崎獲選全球最佳威士忌）</td><td>產品力足，<strong>但產能受限</strong></td></tr>
+        <tr><td>軟性飲料／水（現金牛）</td><td>穩定且強勁的現金流</td><td>可<strong>支撐併購舉債</strong></td></tr>
+        <tr><td>全球配銷通路</td><td><strong>顯著缺口</strong>，美國僅小規模經營</td><td>須「外購」而非自建</td></tr>
+        <tr><td>陳年威士忌庫存</td><td><strong>短缺</strong>，補貨需 10 年</td><td>無法靠有機成長即時放量</td></tr>
+        <tr><td>跨國整合經驗</td><td>有（Orangina、GSK），但面對美國強勢品牌尚屬首次</td><td>整合風險偏高</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>由此可得出關鍵推論：三得利<strong>有產品、有資金，卻欠缺「時間」與「通路」</strong>。威士忌必須陳年十年的物理限制，
+  意味著它<strong>無法靠自建（organic／greenfield）在合理時間內取得全球規模</strong>，而這正是決定進入模式的關鍵變數。</p>
+
+  <h3 class="sub">三、進入模式抉擇：為何是「Buy」而非「Build」或「Ally」？</h3>
+  <div class="tbl-wrap">
+    <table>
+      <caption>表 1-2　三種進入模式比較</caption>
+      <thead><tr><th>模式</th><th>速度</th><th>取得通路</th><th>控制權</th><th>對本案適配度</th></tr></thead>
+      <tbody>
+        <tr><td>自建（Greenfield）</td><td>慢（10 年＋）</td><td>需從零建立</td><td>完全</td><td><span class="pill p-high">差</span> 與陳年限制衝突</td></tr>
+        <tr><td>策略聯盟／合資（Ally／JV）</td><td>中</td><td>共享、受限</td><td>部分</td><td><span class="pill p-mid">普通</span> 已試過（2012 銷售聯盟）但不足以掌控通路</td></tr>
+        <tr><td><strong>收購（Buy）</strong></td><td><strong>快</strong></td><td><strong>立即取得</strong></td><td>完全</td><td><span class="pill p-low">最佳</span> 一次取得品牌＋通路＋團隊</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>三得利與 Beam 早在 2012 年就已結為銷售聯盟，而聯盟的上限也已被印證：它能協助分銷，卻無法讓三得利掌握美國
+  通路與整個品牌組合的<strong>控制權</strong>。在一個快速整併、優質標的逐漸被搶光的產業裡，收購不只是比較快的路，更是
+  <strong>趁標的仍在市場上時難得的機會之窗</strong>。Beam 一次補齊了三得利所有的缺口，包括美國灘頭堡、全球通路，以及
+  橫跨各價位的互補品牌組合，加上雙方風味差異大，自家品牌互搶市場的風險也極低。</p>
+
+  <div class="verdict">
+    <b>結論（Q1）：路徑與模式都選對了，但成敗終究取決於整合。</b>就策略邏輯而言，收購是唯一能同時滿足
+    <strong>速度、通路、控制權</strong>三者的進入模式，方向無誤，這筆交易也讓三得利從全球第十躍升至前三、營收近乎翻倍。
+    真正的風險不在於該不該買，而在於<strong>買得貴不貴（Q2）</strong>，以及<strong>整合得起來與否（Q3、Q4）</strong>。<br>
+    <b>事後驗證：</b>到 2024 年（收購十週年），Suntory Global Spirits 的營收已從收購時的約 25 億美元成長至約
+    <strong>55 億美元</strong>，並訂下 2030 年達 100 億美元的目標，印證了當初路徑正確。只是漫長的整合與償債過程，
+    也說明了這條路的代價（詳見 Q2）。
+  </div>
+</section>
+
+<!-- ============================ Q2 ============================ -->
+<section class="q-block page-break">
+  <h2 class="section"><span class="qno">Q2</span>天價是否值得？舉債是否過高？</h2>
+  <p class="frame-note">分析架構：EV/EBITDA 與控制溢價 · 可比交易（comps）· 綜效估值 · 槓桿與債務承受度 · Hybrid Capital 與信評</p>
+
+  <h3 class="sub">一、價格：以倍數而論，明顯偏貴</h3>
+  <div class="tbl-wrap">
+    <table>
+      <caption>表 2-1　交易條件摘要</caption>
+      <thead><tr><th style="width:34%">項目</th><th>數值</th><th>解讀</th></tr></thead>
+      <tbody>
+        <tr><td>收購價（每股）</td><td class="num">US$83.50（現金）</td><td>全現金、零融資條件風險</td></tr>
+        <tr><td>對價總額（含淨債）</td><td class="num">≈ US$16.0 bn</td><td>日本史上第三大跨國併購</td></tr>
+        <tr><td>溢價（vs. $66.97）</td><td class="num">+25%</td><td>典型控制權溢價區間偏高端</td></tr>
+        <tr><td>隱含 EV/EBITDA</td><td class="num"><strong>≈ 20.3×</strong>（LTM 至 2013/9）</td><td><strong>落在同業區間頂端（見表 2-2）</strong></td></tr>
+        <tr><td>賣方規模</td><td class="num">約為買方 1.2 倍（淨銷售）</td><td>以小搏大，買方反而比賣方小</td></tr>
+        <tr><td>顧問／融資</td><td colspan="2">Morgan Stanley × MUFG 聯合顧問，搭配單一來源過橋貸款（bridge loan）</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>約 <strong>20 倍 EBITDA</strong> 的價碼，明顯高於大型烈酒併購約 12 至 16 倍的常態，連主辦行 MUFG 都提出警示，
+  認為這已是三得利所能負擔的極限，而且能擠出的綜效恐怕比想像中少，畢竟三得利本身備貨不足，短期內很難把自家產品
+  大量導入 Beam 的通路衝高銷量。三得利時任社長佐治信忠（Nobutada Saji）也形容，這是一場
+  「<span class="term">a once-in-a-lifetime gamble</span>（一生一次的豪賭）」。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <caption>表 2-2　可比交易（Comparable Transactions）：20.3× 偏貴，但並非史無前例</caption>
+      <thead><tr><th style="width:34%">交易（年份）</th><th class="num">EV/EBITDA</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td>Pernod Ricard 收購 Allied Domecq（2005）</td><td class="num">約 13.2×</td><td>烈酒業大型併購，偏區間下緣</td></tr>
+        <tr><td>消費品產業平均（烈酒類）</td><td class="num">約 17.5×（區間 12–20×）</td><td>週期長、品牌護城河高，倍數偏高</td></tr>
+        <tr><td><strong>Suntory 收購 Beam（2014）</strong></td><td class="num"><strong>約 20.3×</strong></td><td><strong>落在區間頂端</strong></td></tr>
+        <tr><td>Danone 收購 WhiteWave（2016）</td><td class="num">約 23.4×</td><td>非烈酒（高成長健康食品），列為高端消費品對照</td></tr>
+      </tbody>
+    </table>
+    <div class="tnote">說明：上列可比交易倍數為市場彙整資料，僅供相對定位參考。Beam 的 20.3× 雖高於 Allied Domecq，但仍落在高端消費品併購常見的區間內。其中 WhiteWave 屬食品而非烈酒，僅作為高成長消費品溢價的對照。</div>
+  </div>
+
+  <h4 class="mini">高溢價的三點合理依據</h4>
+  <ul>
+    <li><strong>稀缺性與機會成本：</strong>同時握有全球通路與全價位品牌組合的平台級標的本就稀少，而 Beam 更是市場上
+    <strong>最後一個獨立、大型、且握有全球定價權的波本威士忌平台</strong>，一旦錯過，很可能得再等十年。在整併浪潮中，
+    這類標的的策略稀缺價值往往高過帳面倍數，因此所付的控制溢價（control premium）其實仍在可控範圍。</li>
+    <li><strong>綜效（synergies）潛力：</strong>採購、風險管理與行銷帶來的成本綜效，加上以 Beam 通路銷售三得利威士忌、
+    再以三得利的亞洲通路銷售 Beam 所創造的營收綜效，都是支撐這筆溢價的價值來源，但前提是整合必須成功（見 Q3）。</li>
+    <li><strong>選擇權價值（option value）：</strong>光是拿下美國灘頭堡，就等於買進一張押注未來全球化的看漲選擇權。</li>
+  </ul>
+
+  <h3 class="sub">二、舉債：水準偏高但仍可承受，關鍵在私有家族資本</h3>
+  <div class="tbl-wrap">
+    <table>
+      <caption>表 2-3　三得利財務槓桿變化（附件四，單位：十億日圓）</caption>
+      <thead><tr><th></th><th class="num">2012</th><th class="num">2013</th><th class="num">2014</th><th class="num">2015</th><th class="num">2016</th></tr></thead>
+      <tbody>
+        <tr><td>淨銷售額</td><td class="num">1,852</td><td class="num">2,040</td><td class="num">2,455</td><td class="num">2,687</td><td class="num">2,652</td></tr>
+        <tr><td><strong>淨負債</strong></td><td class="num">318</td><td class="num">126</td><td class="num"><strong>1,625</strong></td><td class="num">1,563</td><td class="num">1,353</td></tr>
+        <tr><td>負債股本比（D/E）</td><td class="num">0.50</td><td class="num">0.10</td><td class="num"><strong>1.15</strong></td><td class="num">1.11</td><td class="num">0.97</td></tr>
+        <tr><td>EBITDA</td><td class="num">183</td><td class="num">214</td><td class="num">295</td><td class="num">344</td><td class="num">352</td></tr>
+        <tr><td><strong>淨負債／EBITDA</strong></td><td class="num">1.7×</td><td class="num">0.6×</td><td class="num"><strong>≈5.5×</strong></td><td class="num">4.5×</td><td class="num">3.8×</td></tr>
+      </tbody>
+    </table>
+    <div class="tnote">資料來源：Ivey 個案附件四，淨負債／EBITDA 為作者計算（單位為十億日圓，故 1,625 即 1.625 兆日圓）。<br>
+    <b>關於個案中「約 20 億美元淨負債」的釐清：</b>這其實指的是 <strong>Beam 公司在收購前自己的淨負債</strong>（2013/9/30 約 20.5 億美元），它被計入 160 億美元的對價之中（個案原文：「included all estimated net debt」）。至於同一句後半的「相當於 EBITDA 的 5 倍、超過日本大企業中位數兩倍」，描述的則是<strong>收購完成後三得利整個集團的槓桿</strong>，也就是附件四中暴增到 1,625 十億日圓（約 159 億美元）、約為三得利 EBITDA 5.5 倍的淨負債。個案把這兩件事擠在同一句，容易讓人混淆，本報告以附件四為準。</div>
+  </div>
+  <p>收購之後，三得利的槓桿一口氣跳升至<strong>淨負債／EBITDA 約 5.5 倍（若以毛債／gross debt 計算則約 6.3 倍），D/E 也由 0.10 升至 1.15</strong>，
+  達日本大型企業中位數的兩倍以上，Moody's 更一次將評等下調兩級至 Baa2。就絕對水準而言，這確實偏高且具風險。
+  不過所謂「過高」與否，仍須視<strong>償債能力與資本性質</strong>而定。</p>
+  <ul>
+    <li><strong>有穩定的現金牛事業作後盾：</strong>三得利龐大又穩定的軟性飲料與水事業，是支撐它持續還債的現金流來源。</li>
+    <li><strong>耐心的家族資本（patient capital）：</strong>創辦家族持股 89%、公司並未上市，<strong>沒有季度股東與股價的壓力</strong>，
+    可以用更長的時間消化債務。事實上到 2016 年，淨負債已降到約 1.35 兆日圓、D/E 0.97，去槓桿照計畫推進。</li>
+  </ul>
+  <div class="callout">
+    <b>債務真正的代價不在金額，而在整合：</b>Beam 當初的關鍵條件，是讓美國子公司重新 IPO、再以募得的資金償債。
+    然而家族不願稀釋 89% 的控制權而否決了 IPO，原訂的還債來源就此落空，於是償債壓力轉而化為對 Beam 的<strong>嚴密財務
+    監控與成本撙節</strong>，反過來侵蝕了互信、加劇了文化衝突（見 Q3）。高槓桿至此，已<strong>從財務問題升級為整合問題</strong>。
+  </div>
+
+  <h3 class="sub">三、巨額債務如何化解：以混合資本守住信用評等（最新進展）</h3>
+  <p>既然 IPO 之路被家族否決，三得利改以另一套財務工程來去槓桿，同時守住投資等級的信用評等。</p>
+  <ul>
+    <li><strong>過橋貸款先接手，再逐步轉為長期：</strong>交易當下先以 Morgan Stanley × MUFG 的<strong>過橋貸款（bridge loan）</strong>支應，
+    之後逐步置換為長天期的債券與貸款，避免短期再融資的壓力。</li>
+    <li><strong>關鍵在於發行混合資本（<span class="term">Hybrid Capital</span>）與次級貸款／債：</strong>這類工具的條件接近股權（年期很長、利息可遞延），
+    會被信評機構<strong>認列 50% 為「權益（equity credit）」</strong>，因此能在<strong>不真正稀釋家族股權</strong>的前提下壓低帳面負債比，
+    正好化解了「不願 IPO」的僵局。</li>
+    <li><strong>成果是守住 S&amp;P「BBB+」評等並轉為正向展望。</strong>靠著穩定的現金流與混合資本，三得利持續去槓桿，到 <strong>2025 年，
+    淨負債／EBITDA 已從收購當時的約 5.5 倍大幅改善至約 1.8 倍、D/E 約 0.2</strong>，S&amp;P 也在 2025 年將其展望由穩定<strong>調升為正向</strong>
+    （旗下 Suntory Beverage &amp; Food 更訂出 2027 年前將淨負債／EBITDA 降至 1.5 倍以下的目標）。</li>
+  </ul>
+  <div class="callout">
+    <b>回到「該如何應對巨額債務」這個問題，</b>三得利的解法是<strong>以時間換取空間</strong>，而非倉促變賣資產或硬推 IPO。
+    它一方面用穩定的軟性飲料現金流持續攤還，另一方面以<strong>混合資本的 50% 權益認列</strong>守住信評，讓家族既能保住控制權，
+    又能逐步把槓桿降下來。事後證明，這條路確實可行。
+  </div>
+
+  <div class="verdict">
+    <b>結論（Q2）：價格偏貴、舉債偏高，但在私有家族加現金牛事業的結構下，屬於「貴，但承受得起」。最大的失誤其實不在價格本身，
+    而在於否決 IPO，等於抽掉了原本講好的還債來源。</b>以倍數來看，三得利<strong>確實付了滿價（full price），甚至略為買貴</strong>，
+    但若一併計入稀缺性、選擇權價值與它的耐心資本，這仍是一場<strong>方向賭對、只是代價昂貴</strong>的賭注。
+    2024 年起，三得利靠獲利成長、發債再融資（2024 年 6 月發行 5 億美元債券），以及<strong>出售 Courvoisier（約 12 億美元予 Campari）</strong>
+    持續去槓桿、聚焦核心，顯示債務終究被消化，只是償債的陰影，確實拖慢了整合的前三年。
+  </div>
+</section>
+
+<!-- ============================ Q3 ============================ -->
+<section class="q-block page-break">
+  <h2 class="section"><span class="qno">Q3</span>如何化解文化差異、加速整合以實現綜效？</h2>
+  <p class="frame-note">分析架構：文化衝突診斷 · 信任修復 · 綜效落地的組織機制</p>
+
+  <h3 class="sub">一、診斷：衝突的三個根源</h3>
+  <div class="tbl-wrap">
+    <table>
+      <caption>表 3-1　日美文化衝突對照</caption>
+      <thead><tr><th style="width:14%">面向</th><th>三得利（日）</th><th>Beam（美）</th><th>衝突點</th></tr></thead>
+      <tbody>
+        <tr><td>管理風格</td><td>事必躬親、報告密集、規避風險、改善（kaizen）</td><td>創業導向、放權、品牌至上</td><td>Beam 視頻繁財報為「繁瑣無用」，疑心母公司意圖</td></tr>
+        <tr><td>對「產品」的態度</td><td>持續改良、可優化製程（如水質淨化技術）</td><td>兩百年工藝是<strong>不可碰觸的聖物</strong>（祖傳酵母菌株、肯塔基石灰岩過濾水）</td><td>新浪建議把三得利水質技術用於 Jim Beam，被視為<strong>觸碰百年配方禁忌，引爆眾怒</strong></td></tr>
+        <tr><td>權力與承諾</td><td>「整個三得利我說了算」，且家族否決 IPO</td><td>期待自主，並盼 IPO 兌現</td><td>承諾落空，導致<strong>互信瓦解、高層出走</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>值得注意的是，那些當初被視為「契合」賣點的特質，例如自豪、熱情與雄心，在缺乏信任時，反而成了放大摩擦的燃料。
+  問題的本質並不在於文化不同，而在於<strong>強勢介入與承諾跳票，共同摧毀了信任的基礎</strong>。</p>
+
+  <h3 class="sub">二、解方：先修復信任，再談綜效（三個層次）</h3>
+  <h4 class="mini">① 治理層：把「決策權」說清楚</h4>
+  <ul>
+    <li>設立<strong>整合管理辦公室（<span class="term">Integration Management Office, IMO</span>）</strong>，明確界定哪些決策歸全球
+    總部、哪些保留給 Beam，終結「子公司管母公司業務」的指揮鏈錯亂。</li>
+    <li><strong>針對 IPO 與資金議題提出可信的替代方案：</strong>既然家族否決了 IPO，就應以白紙黑字的<strong>投資與留任計畫</strong>填補
+    信任真空，避免 Beam 覺得自己被榨乾後遭到拋棄。</li>
+  </ul>
+  <h4 class="mini">② 文化層：尊重工藝，共創而非同化</h4>
+  <ul>
+    <li><strong>將品牌工藝「圈護」起來（ring-fence the craft）：</strong>明確宣示絕不更動 Jim Beam 的配方與蒸餾工藝，
+    把「改善」用在雙方都能受益的<strong>後台</strong>，例如採購、品保與水處理技術共享，而不去碰品牌最敏感的情感核心。</li>
+    <li><strong>釀酒師互換（已見成效）：</strong>讓 Beam 首席蒸餾師 Fred Noe 與三得利首席調和師福與伸二<strong>往返於肯塔基與山崎之間</strong>，
+    藉技術合作建立起對等的專業互敬。這是個案中真正奏效的破冰機制，值得制度化為常設交流。</li>
+    <li><strong>把合作化為產品，催生 Legent 波本（2019）：</strong>這套互換最具體的成果，就是由 Noe 蒸餾、福與伸二調和的
+    <strong>Legent</strong>，這是首款結合肯塔基波本與日式調和工藝的融合威士忌，2019 年上市並納入常態產品線。它說明了雙方
+    真正該做的，不是去改對方的酒，而是攜手做出一支全新的酒，正是化解工藝衝突、又能產出綜效的最佳示範。</li>
+  </ul>
+  <h4 class="mini">③ 人才層：穩住人才，止住流失</h4>
+  <ul>
+    <li>以<strong>留任獎酬（retention package）</strong>與清晰的職涯路徑，遏止 Beam 高層流失（兩年內國際、美國、生產、HR、CMO、CFO 主管接連離任）。</li>
+    <li>創造「<strong>快速勝利（quick wins）</strong>」的舞台：個案顯示採購、風險管理與行銷已率先產生綜效，應加以公開肯定，
+    用早期的成功重建合則兩利的集體信心。</li>
+  </ul>
+
+  <div class="callout">
+    <b>實現綜效應講究先後順序。</b>第一步，先推動沒有爭議、不傷感情、又能快速見效的<strong>後台成本綜效</strong>，例如採購、風控與共用服務。
+    第二步，再做<strong>跨區的營收綜效</strong>，像是用 Beam 的通路銷售三得利威士忌、用三得利的亞洲通路銷售 Beam。最後，才觸及
+    大家最在意、也最敏感的<strong>產品本身</strong>。整個過程的關鍵，是用一次次的成功去累積信任，而不是用命令去要求信任。
+  </div>
+
+  <div class="verdict">
+    <b>結論（Q3）：化解之道可歸納為「治理講清楚、工藝不去碰、後台先整合、釀酒師互換、承諾要兌現」。</b>三得利也體認到，
+    日本企業要建立全球思維往往需要三到五年，而事後來看，雙方確實透過長期交流逐步磨合，例如 2019 年推出 Legent 合作波本、
+    2016 年將總部遷至芝加哥以貼近都會消費者，Jim Beam 與 Maker's Mark 在日本市場也一度大漲 40%，印證了
+    <strong>「先修信任、再求綜效」</strong>這條路確實可行。
+  </div>
+</section>
+
+<!-- ============================ Q4 ============================ -->
+<section class="q-block page-break">
+  <h2 class="section"><span class="qno">Q4</span>應採取何種「最佳整合深度」（Optimal Level of Integration）？</h2>
+  <p class="frame-note">分析架構：Haspeslagh &amp; Jemison 收購整合矩陣（策略互賴 × 組織自主需求）</p>
+
+  <h3 class="sub">一、用整合矩陣定位本案</h3>
+  <p>Haspeslagh &amp; Jemison（1991）以兩個維度判斷整合深度：<strong>一是對「策略互賴與綜效」的需求</strong>，
+  <strong>二是對「被併方組織自主」的需求</strong>，就本案而言，這兩個維度便<strong>同時偏高</strong>。</p>
+  <ul>
+    <li><strong>策略互賴需求高：</strong>三得利付出 20 倍 EBITDA、揹起 5.5 倍槓桿，不靠綜效根本無法回收，
+    因此通路、採購與研發都必須打通。</li>
+    <li><strong>組織自主需求也高：</strong>Beam 的價值正來自它的品牌資產、兩百年工藝、在地團隊與市場知識，加上美國消費者
+    對外資掌控國民品牌相當敏感（一度揚言抵制），<strong>過度同化等於親手摧毀自己買來的價值</strong>。</li>
+  </ul>
+
+  <div class="five-forces" style="grid-template-columns:1fr 1fr;">
+    <div class="ff-box"><h5>低互賴 × 高自主 → 保留（Preservation）</h5>放任其獨立經營。<strong>並不適用</strong>，因為放棄綜效就無法回收溢價。</div>
+    <div class="ff-box ff-center" style="border-color:var(--hi-line);"><h5>高互賴 × 高自主 → 共生（Symbiosis）✔</h5><span class="en">本案最佳解</span><br>前台保留自主、後台深度整合，雙向學習、漸進融合。</div>
+    <div class="ff-box"><h5>低互賴 × 低自主 → 控股（Holding）</h5>純財務投資，不符三得利的策略意圖。</div>
+    <div class="ff-box"><h5>高互賴 × 低自主 → 吸收（Absorption）</h5>完全併入。<strong>風險極高</strong>，會引爆抵制、人才流失與品牌貶值。</div>
+  </div>
+  <p class="frame-note" style="text-align:center;">圖 4-1　Haspeslagh &amp; Jemison 整合矩陣定位：本案落在「<strong>共生（Symbiotic Integration）</strong>」象限</p>
+
+  <h3 class="sub">二、最佳解：共生式整合（Symbiotic Integration）的具體設計</h3>
+  <div class="tbl-wrap">
+    <table>
+      <caption>表 4-1　依「前台 / 後台」分層的整合深度建議</caption>
+      <thead><tr><th style="width:22%">層面</th><th>整合深度</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>品牌、配方、工藝、行銷創意</td><td><span class="pill p-low">保留（高自主）</span></td><td>價值與情感所在，一旦同化即毀滅</td></tr>
+        <tr><td>在地市場營運（美國／日本各自主場）</td><td><span class="pill p-low">保留</span></td><td>在地知識與通路關係不可替代</td></tr>
+        <tr><td>採購、供應鏈、品保、風控、財務、IT</td><td><span class="pill p-high">深度整合</span></td><td>規模經濟是主要成本綜效來源</td></tr>
+        <tr><td>跨區配銷（互賣對方產品）</td><td><span class="pill p-high">深度整合</span></td><td>主要營收綜效來源</td></tr>
+        <tr><td>R&amp;D／釀造技術</td><td><span class="pill p-mid">協作（雙向）</span></td><td>釀酒師互換、知識共享，但不強加</td></tr>
+        <tr><td>企業文化／願景／資本配置</td><td><span class="pill p-mid">共創／集中</span></td><td>建立「第三種文化」，總部掌資本配置</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>換句話說，最理想的整合深度是一種<strong>「聯邦式（federated）」結構</strong>，也就是各自治理、由總部統籌：全球總部負責訂定策略與
+  分配資金，Beam 主導西式烈酒與美洲市場，三得利主導日本威士忌與亞洲市場，後台與通路共用，前台與工藝則各自保留。
+  如此既能實現足以支撐當初高溢價的綜效，又能保住被併方的核心價值，避免吸收式整合所帶來的災難。</p>
+
+  <h3 class="sub">三、整合到位後，可望實現的綜效</h3>
+  <ul>
+    <li><strong>借助 Beam 的全球供應鏈，緩解日本威士忌的原酒短缺：</strong>三得利最頭痛的「陳年酒不夠賣」，可以透過
+    Beam 在全球的<strong>採購、原酒調度與供應鏈</strong>來分攤調節，例如統籌全球桶陳資源、跨廠互通原酒。這正是後台深度整合
+    所能換來的實質好處，也是當初願意付高價買下的綜效之一。</li>
+    <li><strong>在母公司層級，以併購持續分散風險：</strong>三得利並不把資源全押在烈酒上。2026 年 4 月，母公司宣布收購
+    <strong>第一三共 Healthcare（消費者保健與 OTC 成藥，如 Lulu 感冒藥、Loxonin 止痛藥、Minon 護膚）</strong>，以約
+    2,465 億日圓（約 16 億美元）分階段取得，藉此切入成長中的健康事業，<strong>對衝烈酒單一產業的景氣風險</strong>（詳見 Q5）。</li>
+  </ul>
+
+  <div class="verdict">
+    <b>結論（Q4）：最佳整合深度是「共生式整合（Symbiotic）」，而非吸收（Absorption）或放任（Preservation）。</b>
+    原則可濃縮為一句話：<strong>後台合一、前台分治、技術互換、文化共創。</strong>三得利後續演化出的「全球總部＋區域分治＋共享服務」
+    架構，正是朝這個方向收斂。2024 年更名為 <span class="term">Suntory Global Spirits</span>、確立「全球烈酒加 RTD 平台」的單一身分，
+    可視為共生整合在十年後的階段性成果。
+  </div>
+</section>
+
+<!-- ============================ Q5 ============================ -->
+<section class="q-block page-break">
+  <h2 class="section"><span class="qno">Q5</span>美國／全球烈酒業 Porter 五力分析＋ Suntory Global Spirits 營運近況更新</h2>
+  <p class="frame-note">分析架構：Porter Five Forces（2024–2025 最新數據）· 公司營運更新</p>
+
+  <h3 class="sub">一、產業現況：從「疫後榮景」墜入「正常化低谷」</h3>
+  <p>個案的故事停在 2017 年的成長期，但 2024 至 2025 年的產業樣貌已截然不同。疫情期間的囤酒榮景退潮，加上高通膨、高利率、
+  健康與節制風潮，以及 GLP-1 減重藥的普及，全球烈酒業陷入<strong>「去庫存正常化（normalization）」的低谷</strong>，2025 年更疊加了
+  <strong>關稅戰</strong>的衝擊。最新關鍵數據整理如下。</p>
+  <div class="tbl-wrap">
+    <table>
+      <caption>表 5-1　美國與全球烈酒業最新數據（2024–2026）</caption>
+      <thead><tr><th style="width:38%">指標</th><th>數值</th><th>來源／年度</th></tr></thead>
+      <tbody>
+        <tr><td>美國烈酒供應商銷售額</td><td class="num">$37.2 bn（<span style="color:var(--high)">−1.1%</span>）</td><td>DISCUS 2024</td></tr>
+        <tr><td>美國烈酒銷量</td><td class="num">312.2 M 箱（+1.1%）</td><td>DISCUS 2024</td></tr>
+        <tr><td><strong>烈酒佔全美酒類營收市佔</strong></td><td class="num"><strong>42.2%</strong>（連 3 年居冠）</td><td>vs. 啤酒 42.0%、葡萄酒 15.8%</td></tr>
+        <tr><td>美式威士忌（American Whiskey）營收</td><td class="num">$5.2 bn（<span style="color:var(--high)">−1.8%</span>）</td><td>DISCUS 2024</td></tr>
+        <tr><td>烈酒基底 RTD 即飲調酒</td><td class="num">$3.3 bn（<span style="color:var(--good)">+16.5%</span>）</td><td>唯一高成長引擎</td></tr>
+        <tr><td>龍舌蘭／梅斯卡爾</td><td class="num">+2.9%</td><td>DISCUS 2024</td></tr>
+        <tr><td>超高端（Super-premium）價值</td><td class="num"><span style="color:var(--high)">−5.6%</span></td><td>高端化趨勢反轉、消費降級</td></tr>
+        <tr><td>美式威士忌「出口」（關稅衝擊）</td><td class="num"><span style="color:var(--high)">−19%</span>（−$2.5 億）</td><td>2025 年，對加拿大 −85%、對歐盟 −35%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">二、Porter 五力分析（Five Forces）</h3>
+  <p class="frame-note">各格上半為產業結構分析（以個案與產業基本面為基礎），下方「近年補充」則標注 2024–25 的最新動態。</p>
+  <div class="five-forces">
+    <div class="ff-box ff-top">
+      <div class="ff-head"><h5>潛在進入者威脅 <span class="en">New Entrants</span></h5><span class="pill p-low">低—中</span></div>
+      <p>資本密集、威士忌須長期陳年（波本 4 年以上、日威 10 年以上），加上品牌資產與美國的三層分銷制（three-tier），共同構成很高的進入障礙，新進者難以取得頂級經銷商的上架空間。</p>
+      <p class="ff-upd"><b>近年補充：</b>精釀蒸餾廠與名人、RTD 品牌興起，在利基市場打開部分缺口。</p>
+    </div>
+    <div class="ff-box">
+      <div class="ff-head"><h5>供應商議價力 <span class="en">Suppliers</span></h5><span class="pill p-mid">中—高</span></div>
+      <p>穀物、玻璃與能源等投入大致分散，但龍舌蘭與橡木桶較為集中，加上威士忌須長期陳年，使供給的調整極度滯後。</p>
+      <p class="ff-upd"><b>近年補充：</b>氣候變遷推升穀物、龍舌蘭與水源的供給風險，價格波動加大，使整體議價力偏高。</p>
+    </div>
+    <div class="ff-box ff-center">
+      <div class="ff-head"><h5>同業競爭 <span class="en">Rivalry</span></h5><span class="pill p-high">高且升溫</span></div>
+      <p>產業由 Diageo、Pernod、Suntory 等少數巨頭寡占，且持續以併購整併，前十大酒商合計約佔 65% 市佔，彼此以品牌行銷的軍備競賽競爭。</p>
+      <p class="ff-upd"><b>近年補充：</b>正逢去庫存與需求疲軟，全球約有 220 億美元陳年庫存待消化，價格戰因而加劇。</p>
+    </div>
+    <div class="ff-box">
+      <div class="ff-head"><h5>買方議價力 <span class="en">Buyers</span></h5><span class="pill p-mid">中—高</span></div>
+      <p>在美國三層分銷制下，買方為經銷商與零售商，其中大型經銷商（Southern Glazer's、RNDC）與量販通路高度集中、議價力強。</p>
+      <p class="ff-upd"><b>近年補充：</b>消費者轉向降級與節制，品牌忠誠度下降，進一步強化買方力量。</p>
+    </div>
+    <div class="ff-box ff-bottom">
+      <div class="ff-head"><h5>替代品威脅 <span class="en">Substitutes</span></h5><span class="pill p-high">高且上升</span></div>
+      <p>啤酒與葡萄酒是傳統替代品，年輕世代也偏好更平價、便利的選擇，例如罐裝調酒與沙瓦。</p>
+      <p class="ff-upd"><b>近年補充：</b>大麻與 THC 飲料、無酒精／低酒精、「清醒好奇（sober-curious）」風潮與 GLP-1 減重藥，正結構性地壓抑整體飲酒量。</p>
+    </div>
+  </div>
+  <div class="callout">
+    <b>五力之外的第六股力量，是政策與關稅。</b>2025 年的<strong>美中、美歐、美加關稅戰</strong>，對波本與美式威士忌是直接重擊
+    （加拿大下架美國酒類，出口暴跌 85%）。對 Suntory Global Spirits 這種<strong>核心資產是美式威士忌、本身又是日資跨國公司</strong>的企業而言，
+    一方面深受出口關稅之害，另一方面也更凸顯出「日本威士忌加全球多品類」這種分散組合的避險價值。
+  </div>
+  <p class="frame-note"><strong>五力總評：</strong>這個產業的<strong>結構依然不錯</strong>，進入門檻高、由少數大廠寡占，烈酒在酒類中的市佔也居冠，
+  但<strong>目前正處於景氣循環的低點</strong>。替代品威脅與買方議價力同時升高，再加上關稅這個外部變數，使整體獲利能力短期承壓。
+  對既有龍頭而言，可說是「產業結構好，但景氣循環差」。對 Suntory 來說，真正的考驗是能否靠<strong>RTD 與亞太市場</strong>的成長，
+  抵消<strong>美式威士忌</strong>的逆風。</p>
+
+  <h3 class="sub">三、Suntory Global Spirits 營運近況更新（截至 2026/6）</h3>
+  <div class="tbl-wrap">
+    <table>
+      <caption>表 5-2　從 Beam Suntory 到 Suntory Global Spirits：十年後的成績單</caption>
+      <thead><tr><th style="width:30%">項目</th><th>2014（收購時）</th><th>最新（2024–2025）</th></tr></thead>
+      <tbody>
+        <tr><td>公司名稱</td><td>Beam Suntory Inc.</td><td><strong>Suntory Global Spirits</strong>（2024/5 更名，收購 10 週年）</td></tr>
+        <tr><td>執行長 / 總部</td><td>Matt Shattock / 伊利諾 Deerfield</td><td><strong>Greg Hughes</strong> / 紐約（全球總部 2016 遷芝加哥）</td></tr>
+        <tr><td>烈酒事業營收</td><td>約 US$2.5 bn</td><td>約 <strong>US$5.5 bn</strong>（10 年成長逾一倍）</td></tr>
+        <tr><td>全球排名</td><td>價值第 3 / 銷量第 4</td><td><strong>穩居全球第 3</strong>（Diageo＞Pernod＞Suntory）</td></tr>
+        <tr><td>長期目標</td><td>—</td><td><strong>2030 年營收 US$10 bn</strong></td></tr>
+        <tr><td>母公司 Suntory Holdings（FY2024）</td><td colspan="2">營收 ¥3,417.9 bn（+4.0%，約 $20.3 bn），營業利益 ¥328.9 bn，其中烈酒事業營業利益 ¥180.7 bn</td></tr>
+        <tr><td>母公司 Suntory Holdings（FY2025）</td><td colspan="2">營收 ¥3.43 兆（+0.4%，約 $22.3 bn），<strong>營業利益 ¥221.2 bn（−32.8%）</strong>，其中烈酒事業營業利益 <strong>−42.9%</strong>（歐美需求疲軟，加上出售 Courvoisier）</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h4 class="mini">近期動態與挑戰</h4>
+  <ul>
+    <li><strong>北美吃緊，亞太亮眼：</strong>2024 年 Jim Beam 與 Maker's Mark 在美國的出貨（depletion，指經銷商賣往終端的量）走弱，
+    但 Jim Beam 靠日本市場創下新高，全球仍維持低個位數成長。亞太則是最大亮點，RTD 即飲調酒（-196、On the Rocks）成長強勁。</li>
+    <li><strong>關稅與庫存的雙重打擊：</strong>2025 年美式威士忌出口大跌，加上肯塔基的<strong>陳年庫存創新高（逾 1,600 萬桶）</strong>，
+    公司在 <strong>2025 年 12 月宣布旗艦 Clermont 蒸餾廠暫停蒸餾約一年</strong>，以消化庫存。這和十年前三得利苦於「供給短缺」的處境
+    <strong>正好相反，如今反倒變成供給過剩</strong>。</li>
+    <li><strong>聚焦核心：</strong>出售 Courvoisier 干邑（約 12 億美元予 Campari），把資源集中在威士忌與 RTD。</li>
+    <li><strong>FY2025 獲利明顯探底：</strong>母公司 2025 年營收僅成長 0.4%（¥3.43 兆），營業利益卻<strong>大減 32.8% 至 ¥221.2 bn</strong>，
+    其中<strong>烈酒事業營業利益更重挫 42.9%</strong>，主因正是前述的歐美需求疲軟、關稅，以及出售 Courvoisier，等於把產業的低谷直接反映在財報上。</li>
+    <li><strong>跨業分散風險：</strong>2026 年 4 月，母公司宣布收購<strong>第一三共 Healthcare（消費者保健與 OTC 成藥）</strong>，
+    以約 2,465 億日圓（約 16 億美元）分階段取得，藉切入健康事業<strong>對衝烈酒單一產業的景氣風險</strong>，延續其一貫以併購跨域成長的打法。</li>
+    <li><strong>仍是私有：</strong>三得利維持家族控股、未公開上市，也沒有讓 Suntory Global Spirits 進行 IPO 的計畫。當年 Beam 念茲在茲的
+    IPO，至今仍未實現。</li>
+  </ul>
+
+  <div class="verdict">
+    <b>結論（Q5）：</b>美國與全球烈酒業的<strong>結構吸引力仍在，但正處於需求疲軟、替代品與關稅夾擊的循環低谷</strong>。
+    Suntory Global Spirits 十年間營收翻倍、坐穩全球第三，<strong>證明了當年收購路徑在策略上的正確</strong>。然而 2025 年的關稅戰與
+    波本去庫存（連旗艦廠都被迫停產），也<strong>清楚暴露出它對美式威士忌的依賴，以及隨景氣循環起伏的風險</strong>。下一階段的成敗關鍵，就在於
+    <strong>RTD、龍舌蘭、亞太市場與日本威士忌</strong>，能否撐起 2030 年 100 億美元的目標。
+  </div>
+</section>
+
+<!-- ============================ 總結一句 ============================ -->
+<section class="q-block">
+  <hr class="thin">
+  <div class="abstract" style="border-left-color:var(--hi-line); background:var(--hi);">
+    <b>全案總結：</b>三得利收購 Beam，是一樁<strong>「方向對、出價貴、整合難」</strong>的經典跨國併購。它的策略路徑正確，
+    以收購換取速度、通路與控制權，代價雖然昂貴，卻靠私有家族資本得以承受，而真正的價值能否兌現，取決於<strong>共生式整合</strong>
+    能否化解日美之間的文化衝突。十年之後，公司於 2024 年更名為 Suntory Global Spirits，營收翻倍、穩居全球第三，大致驗證了這場
+    「一生一次的豪賭」確實賭對了方向。但 2025 年的關稅與去庫存風暴也提醒我們，<strong>收購後整合與景氣循環風險，才是高溢價併購真正的長期試煉</strong>。
+  </div>
+</section>
+
+<!-- ============================ 參考資料 ============================ -->
+<section class="q-block page-break">
+  <h2 class="section">參考資料（References）</h2>
+  <h4 class="mini">一、個案本文</h4>
+  <ol class="refs">
+    <li>Kittilaksanawong, W. &amp; Wyckoff, K. M. (2017). <em>Beam Suntory: Striving for Optimal Post-Acquisition Integration.</em> Ivey Publishing, Case No. 9B17M164 (W17681).</li>
+  </ol>
+  <h4 class="mini">二、最新數據與報導（2024–2026）</h4>
+  <ol class="refs" start="2">
+    <li>Distilled Spirits Council of the U.S. (DISCUS) (2025/2). <em>Annual Economic Briefing 2024</em>（烈酒市佔 42.2%、供應商銷售 $37.2 bn、RTD +16.5%）. distilledspirits.org.</li>
+    <li>Suntory Holdings (2025/2/14). <em>Summary of FY2024 Earnings</em>（營收 ¥3,417.9 bn、營業利益 ¥328.9 bn）. suntory.com/about/financial.</li>
+    <li>Shanken News Daily (2025/2/14). “Suntory Global Spirits Posts Growth In 2024, Despite North America Challenges.”</li>
+    <li>Moodie Davitt Report (2025). “Suntory Global Spirits records steady revenue growth despite challenging 2024.”</li>
+    <li>Suntory (2024/5). “Beam Suntory Rebrands to Suntory Global Spirits.” News Release 14590E.</li>
+    <li>Global Drinks Intel (2025). “How will 2025 treat Suntory Global Spirits? – CEO Greg Hughes speaks exclusively.”</li>
+    <li>CNN Business (2025/12/21). “Jim Beam pauses production at main distillery as bourbon inventories rise.”</li>
+    <li>Global News / Yahoo Finance (2025–2026). “Jim Beam halting some bourbon production as exports fall amid U.S. tariffs.”</li>
+    <li>The Drinks Business (2026/4). “American whiskey sales fall 19% year-on-year.”</li>
+    <li>Fast Company (2025). “Trump's Canada trade war hits Jack Daniel's and Jim Beam with a devastating $143 million loss.”</li>
+    <li>The Spirits Business (2025/6). “Top 10 best-selling Brand Champions in 2024”。Statista（2024 全球烈酒生產商銷量份額：Diageo 7.6%、Pernod 4.6%、Suntory 3.0%）。</li>
+    <li>Suntory Holdings (2026/2/13). <em>Summary of FY2025 Earnings</em>（營收 ¥3.43 兆 +0.4%、營業利益 ¥221.2 bn −32.8%、烈酒事業營業利益 −42.9%）. suntory.com/about/financial.</li>
+    <li>The Spirits Business / Suntory Global Spirits (2019/3). “Noe and Fukuyo create Legent Bourbon”（Fred Noe × 福與伸二之首款日美融合波本）。</li>
+    <li>Nikkei Asia / The Drinks Business (2026/4). “Suntory Holdings to buy Daiichi Sankyo's OTC unit”（消費者保健事業，約 ¥2,465 億／US$1.6 bn，分階段 2026–2029）。</li>
+    <li>S&amp;P Global Ratings / cbonds / Investing.com (2025). “Suntory Holdings 'BBB+' affirmed, outlook revised to positive”（混合資本獲 50% 權益認列、去槓桿）。</li>
+    <li>可比交易參考：Pernod Ricard 收購 Allied Domecq（2005，約 13.2× EV/EBITDA）、Danone 收購 WhiteWave（2016，約 23.4×）。倍數為市場彙整資料。</li>
+  </ol>
+  <h4 class="mini">三、分析架構</h4>
+  <ol class="refs" start="18">
+    <li>Porter, M. E. (1979/2008). “The Five Competitive Forces That Shape Strategy.” <em>Harvard Business Review.</em></li>
+    <li>Haspeslagh, P. C. &amp; Jemison, D. B. (1991). <em>Managing Acquisitions: Creating Value Through Corporate Renewal.</em>（整合矩陣：Preservation / Symbiosis / Absorption / Holding）</li>
+    <li>Barney, J. B. (1991). VRIO Framework。進入模式 Build–Borrow–Buy 之策略選擇文獻。</li>
+  </ol>
+  <p class="tnote">說明：本報告財務數字以個案附件四為主，產業與公司近況數據引自上列 2024–2026 公開資料，幣別換算採當期約略匯率，僅供課堂研究分析之用。</p>
+</section>
+
+</div><!-- /page -->
+</body>
+</html>
